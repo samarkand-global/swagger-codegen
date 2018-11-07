@@ -1,3 +1,15 @@
+# SAMARKAND
+
+```
+docker run -v ${PWD}:/local -t registry.gitlab.com/samarkand-docker/swagger-codegen:latest generate {PATH_TO_MY_SWAGGER}.yml {LANGUAGE} /local/{OUTPUT_DIR}
+```
+
+e.g.
+
+```
+docker run -v ${PWD}:/local -t smk-swagger-codegen:latest generate nomad_hawk.yml python /local/client
+```
+
 # Swagger Code Generator
 
 - Master (2.4.0): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)

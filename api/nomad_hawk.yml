@@ -1,0 +1,166 @@
+swagger: "2.0"
+info:
+  description: "This is the API descriptor for the Nomad Hawk API, responsible for tracking and analytics."
+  version: "1.1.0"
+  title: "Nomad Hawk"
+  contact:
+    email: "paul@samarkand.global"
+host: "hawk.samarkand.io"
+basePath: "/v2"
+tags:
+- name: "track"
+  description: "Record an individual event"
+schemes:
+- "https"
+security:
+- api_key: []
+paths:
+  '/track':
+    post:
+      x-aliyun-apigateway-auth-type: APP
+      x-aliyun-apigateway-paramater-handling: PASSTHROUGH
+      x-aliyun-apigateway-backend:
+        type: HTTP
+        address: https://5717428494105779.cn-shanghai.fc.aliyuncs.com/2016-08-15/proxy/Nomad/main/
+        path: "/track"
+        method: POST
+        timeout: 10000
+      tags:
+      - "track"
+      summary: "Record an individual event"
+      description: "Sends an event to hawk"
+      operationId: "track"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Event to track"
+        schema:
+          $ref: "#/definitions/Event"
+        required: true
+      responses:
+        400:
+          description: "Invalid input"
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+      security:
+      - api_key: []
+  '/track/{store_id}':
+    post:
+      x-aliyun-apigateway-auth-type: APP
+      x-aliyun-apigateway-paramater-handling: PASSTHROUGH
+      x-aliyun-apigateway-backend:
+        type: HTTP
+        address: https://5717428494105779.cn-shanghai.fc.aliyuncs.com/2016-08-15/proxy/Nomad/main/
+        path: "/track/{store_id}"
+        method: POST
+        timeout: 10000
+      tags:
+      - "track"
+      summary: "Record an individual event"
+      description: "Sends an event to hawk"
+      operationId: "track"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Event to track"
+        schema:
+          $ref: "#/definitions/Event"
+        required: true
+      - name: "store_id"
+        in: "path"
+        description: "Store id of tracked event"
+        type: "string"
+        required: true
+      responses:
+        400:
+          description: "Invalid input"
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"
+definitions:
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+  Event:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        example: "event"
+      category:
+        type: "string"
+        example: "order"
+      label:
+        type: "string"
+        example: "order_create_failed"
+      message:
+        type: "string"
+        example: "Couldnt create order"
+      value:
+        type: "string"
+        example: "https://some.url"
+      value_type:
+        type: "string"
+        example: "url"
+      source:
+        type: "string"
+        example: "odoo"
+      sales_channel:
+        type: "string"
+        example: "Onion (B2C)"
+      user:
+        type: "string"
+        example: "vessy"
+      id:
+        type: "string"
+        example: "ABC123"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/EventItem"
+  EventItem:
+    type: "object"
+    properties:
+      item_name:
+        type: "string"
+        example: "Can of beans"
+      item_price:
+        type: "number"
+        example: 10.10
+      item_quantity:
+        type: "integer"
+        example: 1
+      item_category:
+        type: "string"
+        example: "Food"
+      item_barcode:
+        type: "string"
+        example: "55001234567890"
+      item_currency:
+        type: "string"
+        example: "EUR"
