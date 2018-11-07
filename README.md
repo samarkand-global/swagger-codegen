@@ -1,15 +1,3 @@
-# SAMARKAND
-
-```
-docker run -v ${PWD}:/local -t registry.gitlab.com/samarkand-docker/swagger-codegen:latest generate {PATH_TO_MY_SWAGGER}.yml {LANGUAGE} /local/{OUTPUT_DIR}
-```
-
-e.g.
-
-```
-docker run -v ${PWD}:/local -t smk-swagger-codegen:latest generate nomad_hawk.yml python /local/client
-```
-
 # Swagger Code Generator
 
 - Master (2.4.0): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
@@ -235,15 +223,14 @@ To generate code with this image, you'll need to mount a local location as a vol
 Example:
 
 ```sh
-docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
-    -i http://petstore.swagger.io/v2/swagger.json \
-    -l go \
-    -o /local/out/go
+docker run -v ${PWD}:/local -t registry.gitlab.com/samarkand-docker/swagger-codegen:latest \
+    generate {PATH_TO_MY_SWAGGER}.yml {LANGUAGE} /local/{OUTPUT_DIR}
+
 ```
 
 (On Windows replace `${PWD}` with `%CD%`)
 
-The generated code will be located under `./out/go` in the current directory.
+The generated code will be located under `{OUTPUT_DIR}` in the current directory.
 
 ## Getting Started
 
