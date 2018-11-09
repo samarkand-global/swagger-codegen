@@ -23,4 +23,4 @@ deploy:
     - cd modules/swagger-codegen-cli
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH-cli .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH-cli
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH
