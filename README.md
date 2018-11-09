@@ -223,14 +223,15 @@ To generate code with this image, you'll need to mount a local location as a vol
 Example:
 
 ```sh
-docker run -v ${PWD}:/local -t registry.gitlab.com/samarkand-docker/swagger-codegen:latest \
-    generate {PATH_TO_MY_SWAGGER}.yml {LANGUAGE} /local/{OUTPUT_DIR}
-
+docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
+    -i http://petstore.swagger.io/v2/swagger.json \
+    -l go \
+    -o /local/out/go
 ```
 
 (On Windows replace `${PWD}` with `%CD%`)
 
-The generated code will be located under `{OUTPUT_DIR}` in the current directory.
+The generated code will be located under `./out/go` in the current directory.
 
 ## Getting Started
 
