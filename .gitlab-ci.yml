@@ -1,14 +1,28 @@
-image: docker:stable
-
-services:
-  - docker:dind
+image: maven:3-jdk-7
 
 stages:
   - build
+  - deploy
 
 build:
   stage: build
+  artifacts:
+    paths:
+      - modules/swagger-codegen-cli/target/
   script:
+    - mvn clean package
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  dependencies:
+    - build
+  script:
+    - ls artifacts
+    - cp artifacts/swagger-codegen-cli.jar
+    - cd modules/swagger-codegen-cli
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH-cli .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH-cli
