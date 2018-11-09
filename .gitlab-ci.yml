@@ -20,7 +20,9 @@ deploy:
   dependencies:
     - build
   script:
-    - ls artifacts
+    - ls
+    - ls modules/swagger-codegen-cli/target/
+    - ls artifact
     - cp artifacts/swagger-codegen-cli.jar
     - cd modules/swagger-codegen-cli
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
